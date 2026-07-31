@@ -6,13 +6,27 @@ WORKDIR /app
 # meoweo-shared is a private git dependency, so the build needs git and a credential.
 RUN apk add --no-cache git
 
-# Two ways in, because agent forwarding is awkward on Windows and absent in most CI:
-#   SSH   : docker build --ssh default .
-#   token : docker build --secret id=gh_token,env=GITHUB_TOKEN .
-# The token is a mounted secret and the credential is unset in the same layer, so neither the
-# token nor the rewritten URL survives into the image.
+# A GitHub token is the one credential path that works the same on Linux, macOS, Windows and CI -
+# SSH agent forwarding does not (Docker Desktop cannot reach a Git Bash agent, and the Windows
+# OpenSSH service is off by default). The token is a mounted secret and the credential is removed
+# in the same layer, so neither it nor the rewritten URL survives into the image.
 COPY package.json package-lock.json ./
-RUN --mount=type=ssh --mount=type=secret,id=gh_token     sh -eu -c 'if [ -s /run/secrets/gh_token ]; then         TOKEN=$(cat /run/secrets/gh_token);         git config --global url."https://x-access-token:$TOKEN@github.com/".insteadOf "https://github.com/";         npm ci;         git config --global --remove-section url."https://x-access-token:$TOKEN@github.com/";       else         npm ci;       fi'
+RUN --mount=type=secret,id=gh_token \
+    sh -eu -c 'if [ ! -s /run/secrets/gh_token ]; then \
+        echo "" >&2; \
+        echo "ERROR: GITHUB_TOKEN is empty or unset." >&2; \
+        echo "meoweo-shared is a private repo, so the build cannot fetch it without one." >&2; \
+        echo "" >&2; \
+        echo "  bash / zsh : GITHUB_TOKEN=\$(gh auth token) docker compose build" >&2; \
+        echo "  PowerShell : \$env:GITHUB_TOKEN = gh auth token" >&2; \
+        echo "               docker compose build" >&2; \
+        echo "" >&2; \
+        exit 1; \
+      fi; \
+      TOKEN=$(cat /run/secrets/gh_token); \
+      git config --global url."https://x-access-token:$TOKEN@github.com/".insteadOf "https://github.com/"; \
+      npm ci; \
+      git config --global --remove-section url."https://x-access-token:$TOKEN@github.com/"'
 
 COPY . .
 RUN npm run build
