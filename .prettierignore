@@ -1,0 +1,4 @@
+# Generated / vendored artifacts — never reformat.
+src/vendor/
+dist/
+

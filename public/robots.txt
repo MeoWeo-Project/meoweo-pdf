@@ -1,0 +1,4 @@
+# The free app is kept out of search so it never competes with meoweo.com (also enforced by the
+# X-Robots-Tag header in _headers).
+User-agent: *
+Disallow: /

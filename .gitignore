@@ -1,0 +1,47 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+dist-standalone/
+build/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# TypeScript
+*.tsbuildinfo
+# Compiled JS alongside source — Vite handles transpilation, not tsc
+src/**/*.js
+# ...except the vendored LGPL ffmpeg core (a real artifact, not compiled output)
+!src/vendor/ffmpeg/ffmpeg-core.js
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Vite
+.vite/
+
+# Playwright
+playwright-report/
+test-results/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo

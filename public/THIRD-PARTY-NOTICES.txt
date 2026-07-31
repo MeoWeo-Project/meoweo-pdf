@@ -1,0 +1,41 @@
+MeoWeo PDF Tools - Third-Party Notices
+======================================
+
+This application runs entirely in your browser and bundles the following
+third-party software. Each component is the property of its authors and is
+distributed under its own license.
+
+Every dependency here is permissively licensed (MIT / Apache-2.0). AGPL PDF
+engines (MuPDF, Ghostscript) are deliberately NOT used: they would require the
+entire application's source to be published under the AGPL.
+
+------------------------------------------------------------------------------
+pdf.js (pdfjs-dist)
+  Copyright (c) Mozilla Foundation and contributors
+  License: Apache-2.0
+  Source:  https://github.com/mozilla/pdf.js
+  Used as: rendering PDF pages to canvas - page thumbnails and PDF-to-image.
+
+------------------------------------------------------------------------------
+pdf-lib (@cantoo/pdf-lib)
+  Copyright (c) Andrew Dillon and contributors; fork maintained by Cantoo Scribe
+  License: MIT
+  Source:  https://github.com/cantoo-scribe/pdf-lib
+  Used as: document structure - merge, split, reorder, rotate, stamp, metadata,
+           and opening password-protected PDFs.
+
+------------------------------------------------------------------------------
+fflate
+  Copyright (c) Arjun Barrett
+  License: MIT
+  Source:  https://github.com/101arrowz/fflate
+  Used as: zipping multi-file output (PDF-to-images, split).
+
+------------------------------------------------------------------------------
+Other bundled libraries
+  React, React DOM              MIT   (c) Meta Platforms, Inc. and affiliates
+  Zustand                       MIT   (c) Paul Henschel
+  lucide-react                  ISC   (c) Lucide Contributors
+
+Full license texts are available in each package's repository and in the
+node_modules of this project's source.

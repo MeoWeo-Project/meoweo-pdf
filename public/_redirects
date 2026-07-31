@@ -1,0 +1,3 @@
+# SPA fallback: the History-API router mints real paths (/cutter, /key-bpm, ...), so any unknown
+# path must serve index.html rather than 404 on a refresh or deep link.
+/*    /index.html    200
