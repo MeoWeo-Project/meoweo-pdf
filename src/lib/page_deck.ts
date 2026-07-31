@@ -69,11 +69,11 @@ export function pageId(sourceId: string, sourceIndex: number): string {
  * @returns A new deck with the source and its pages appended.
  */
 export function addSource(deck: Deck, source: DeckSource): Deck {
-  const pages = Array.from({ length: source.pageCount }, (_, index) => ({
+  const pages: DeckPage[] = Array.from({ length: source.pageCount }, (_, index) => ({
     id: pageId(source.id, index),
     sourceId: source.id,
     sourceIndex: index,
-    rotation: 0 as Rotation,
+    rotation: 0,
   }));
   return { sources: [...deck.sources, source], pages: [...deck.pages, ...pages] };
 }
